@@ -149,6 +149,11 @@ CLAUDE.md, 개인별 Claude 지침, 프로젝트 지침 등 파일이 아니라 
 - 직접 설치시, 파일 이름과 설정 대소문자에 유의해주세요. 이것 때문에 설정이 안 되는 케이스가 보고되어 있습니다.
 - 서브에이전트 동작은 상황에 맞추어 확인하셔야 합니다. 두 버전 모두 서브에이전트에게 입력되는 프롬프트도 한국어라면 이 output-style을 준수하게 하는 조항과, '영어로 작성할 것을 한국어로 작성하지 않는다'라는 취지의 조항이 있으나, 이 조항들이 실제로 얼마나 지켜질지는 상황에 따라 많이 다르니, 필요하다면 직접 관찰해서 올바로 동작하도록 수정해주세요.
 
+## 이 fork의 개발 도구
+
+- `scripts/check-sync.sh`: 두 output-style 파일의 본문이 동일한지 확인합니다. 본문을 고친 뒤에는 반드시 통과시켜야 합니다.
+- `scripts/run-evals.sh`: `plugins/fluent-korean/evals/`의 케이스를 `claude plugin eval`로 실행합니다. eval 실행 환경에서는 output-style을 선택할 수 없으므로, `scripts/gen-evals.py`가 각 케이스의 쌍(`<이름>--styled`)을 만들어 `append_system_prompt`로 현재 스타일 본문을 넣습니다. 따라서 비교는 with/without 대신 `<이름>`과 `<이름>--styled` 케이스 사이에서 읽습니다. 생성된 케이스와 `results/`는 git에 올라가지 않습니다.
+
 ## 원리
 
 모델이 한국어를 왜 못 쓰는지, 얼마나 어떻게 못 쓰는지, 왜 잘 쓰게 하기 어려운지, 어떻게 교정하는지는 다음 문서에서 다룹니다. *[원리 문서(작성 중)](https://docs.google.com/document/d/1FGthxxrCVtjCfPG6qZSI-F0_DBOz6iNNlbVBUJ3xw2M/edit?usp=sharing)*
